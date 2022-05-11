@@ -1,0 +1,50 @@
+{% extends "common/common.html" %}
+
+{% block title %}デニーズ{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="static/css/scroll.css" />
+{% endblock %}
+
+{% block card_header_1 %}デニーズ{% endblock %}
+
+{% block card_body_1 %}
+    {% if current_user.is_authenticated%}
+        <form action="/dns/schedule">
+            <button>スケジュール登録</button>
+        </form>
+        ※{{deadline[0]}}月分の締め切りまで<font color="red">残り{{deadline[1].days}}日</font>
+        <br><br>
+        <form action="/dns/month/th">
+            <button>{{thismonth_num}}月のスケジュール</button>
+        </form><br>
+        <form action="/dns/month/ne">
+            <button>{{nextmonth_num}}月のスケジュール</button>
+        </form><br>
+    {% if current_user.dns_admin %}
+        <form action="/dns/admin">
+            <button>管理者画面</button>
+        </form><br>
+    {% endif %}
+        <form action="/logout">
+            <button>ログアウト</button>
+        </form><br>
+    {% else %}
+        <form action="/login">
+            <button>ログイン</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% if current_user.is_authenticated%}
+{% set card_2 = 1 %}
+{% block card_header_2 %}店舗からのおしらせ{% endblock %}
+{% block card_body_2 %}
+    <div id="scroll">
+    {% for news in all_news %}
+    {{ news.update.strftime("%y/%m/%d %H:%M") }}：<a href=/dns/news/{{news.id}}>{{ news.news_title }}</a>
+    <br>
+    {% endfor %}
+    </div>
+{% endblock %}
+{% endif %}

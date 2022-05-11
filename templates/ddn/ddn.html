@@ -1,0 +1,40 @@
+{% extends "common/common.html" %}
+
+{% block title %}TOP{% endblock %}
+
+{% block meta %} <meta name="google-site-verification" content="t7GsoKY7NF-mP3tprogLim3UUXNCvvlawL0mjqqKfgQ" /> {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="static/css/scroll.css" />
+{% endblock %}
+
+{% block card_header_1 %}サイト紹介{% endblock %}
+{% block card_body_1 %}
+    <img src="/static/images/logo.png" class="img-fluid" alt="">
+    <br><br><br>
+    <p>
+    こんにちは。このWEBページを開発している久島です。<br>
+    バイト先のデニーズのスケジュールの作成の手助けになればと友人と開発を行っています。<br>
+    開発中のため、バグや誤字も多いですが、発見し次第ページ下部の連絡先にご連絡いただけると幸いです。<br>
+    すぐに対応させていただきます。<br>
+    また、機能的な面でもご意見いただけましたら、可能な限り反映させていただきます。
+    </p>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}おしらせ{% endblock %}
+{% block card_body_2 %}
+    <p>ニュースをクリックすると詳細が開きます。</p>
+    <div id="scroll">
+    {% for news in all_news %}
+    {{ news.update.strftime("%y/%m/%d %H:%M") }}：<a href=/news/{{news.id}}>{{ news.news_title}}</a> <span class="badge bg-info text-dark">{{news.news_category}}</span>
+    <br>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% set card_s1 = 1 %}
+{% block card_header_s1 %}サイト一覧{% endblock %}
+{% block card_body_s1 %}
+    <a class="btn btn-outline-secondary me-1" href="/dns" role="button">デニーズ関連はこちら</a>
+{% endblock %}

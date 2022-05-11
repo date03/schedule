@@ -1,0 +1,22 @@
+{% extends "common/common.html" %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block card_header_1 %}ログイン{% endblock %}
+
+{% block card_body_1 %}
+    <form id="loginform" method="post">
+        {{ form.csrf_token }}
+        <p><label for="user_number">ID</label>
+        {{ form.user_number }}</p>
+        <p><label for="password">パスワード</label>
+        {{ form.password }}</p>
+        <p><button type="submit">サインイン</button></p>
+    </form>    
+{% endblock %}
+
+{% block js %}
+    {% if status == "error" %}
+        alert("IDかパスワードが間違っています。");
+    {% endif %}
+{% endblock %}

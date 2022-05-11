@@ -1,0 +1,84 @@
+{% extends "common/common.html" %}
+
+{% block card_header_1 %}リダイレクト{% endblock %}
+
+{% block card_body_1 %}
+    <p>移動中・・・長時間ページが移動しない場合は、ページを更新してください。</p>
+{% endblock %}
+
+{% block js %}
+    {% if status == "logout" %}
+        alert("ログアウトしました。\n3秒後にページを移動します。");
+        setTimeout("location.href='/'",1000*3);
+    {% elif status == "login" %}
+        alert("ログインしました。\n3秒後にページを移動します。");
+        setTimeout("location.href='/dns'",1000*3);
+    {% elif status == "mustlogin" %}
+        alert("ログインが必要です。\nログインページに移動します。");
+        location.href="/login?next={{next}}";
+    {% elif status == "redirect" %}
+        alert("3秒後に元のページに戻ります。");
+        setTimeout('location.href="{{next}}"',1000*3);
+    {% elif status == "monthschedulefailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/schedule";
+    {% elif status == "monthschedulesuccess" %}
+        alert("登録しました。");
+        location.href="/dns/schedule";
+    {% elif status == "createuserfailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/createuser";
+    {% elif status == "createusersuccess" %}
+        alert("登録しました。\n3秒後にページを移動します。");
+        setTimeout("location.href='/dns/admin/createuser'",1000*3);
+    {% elif status == "createnewsfailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/createnews";
+    {% elif status == "createnewssuccess" %}
+        alert("登録しました。\n3秒後にページを移動します。");
+        setTimeout("location.href='/dns/admin'",1000*3);
+    {% elif status == "setmonthschedulefailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/monthschedule?week={{next}}";
+    {% elif status == "setmonthschedulesuccess" %}
+        alert("登録しました。");
+        location.href="/dns/admin/monthschedule?week={{next}}";
+    {% elif status == "dayschedulefailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/month/{{next}}";
+    {% elif status == "dayschedulesuccess" %}
+        alert("登録しました。\n3秒後にページを移動します。");
+        setTimeout('location.href="/dns/month/{{next}}"',1000*3);
+    {% elif status == "deldayschedulefailure" %}
+        alert("削除に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/month/{{next}}";
+    {% elif status == "deldayschedulesuccess" %}
+        alert("削除しました。\n3秒後にページを移動します。");
+        setTimeout('location.href="/dns/month/{{next}}"',1000*3);
+    {% elif status == "setdayschedulefailure" %}
+        alert("登録に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/dayschedule";
+    {% elif status == "setdayschedulesuccess" %}
+        alert("登録しました。");
+        location.href="/dns/admin/dayschedule";
+    {% elif status == "confsetdayschedulefailure" %}
+        alert("エラーが発生しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/dayschedule";
+    {% elif status == "confsetdayschedulesuccess" %}
+        location.href="/dns/admin/dayschedule?id={{next}}";
+    {% elif status == "delsetdayschedulefailure" %}
+        alert("削除に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/dayschedule";
+    {% elif status == "delsetdayschedulesuccess" %}
+        alert("削除しました。");
+        location.href="/dns/admin/dayschedule";
+    {% elif status == "delstdschedulefailure" %}
+        alert("削除に失敗しました。\n繰り返し失敗する場合はページ下部の問い合わせ先にご連絡ください。");
+        location.href="/dns/admin/monthschedule?week={{next}}";
+    {% elif status == "delstdschedulesuccess" %}
+        alert("削除しました。");
+        location.href="/dns/admin/monthschedule?week={{next}}";
+    {% else %}
+        location.href='/dns';
+    {% endif %}
+{% endblock %}

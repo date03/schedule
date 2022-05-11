@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>Minecraftサーバ MOD一覧</title>
+		
+    </head>
+    <body>
+        
+    </body>
+</html>
+
+{% extends "common/common.html" %}
+
+{% block title %}Minecraftサーバ MOD一覧{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/minecraft_mod.css"/>
+{% endblock %}
+
+{% block card_header_1 %}Minecraftサーバ　MOD一覧{% endblock %}
+
+{% block card_body_1 %}
+    <table class="table table-bordered">
+        <tr>
+            <th>MOD名</th>
+            <th>説明</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>Multiverse-Core-4.2.2</td>
+            <td>複数の世界を行き来でききるようにする</td>
+            <td><a href="https://wiki.craftportal.jp/view/%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E8%A7%A3%E8%AA%AC:Multiverse-Core">操作</a></td>
+        </tr>
+        <tr>
+            <td>Multiverse-Portals-4.2.1</td>
+            <td>複数の世界をつなぐポータルを開けれるようにする</td>
+            <td><a href="https://w.atwiki.jp/penpenserver/pages/13.html">操作</a></td>
+        </tr>
+        <tr>
+            <td>perworldinventory-kt-2.3.2</td>
+            <td>複数の世界間でアイテムを共有できるようにする</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Geyser-Spigot</td>
+            <td>統合版とjava版でクロスプレイを可能とする</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>floodgate-bukkit</td>
+            <td>java版のアカウント無しでもプレイ可能にする</td>
+            <td></td>
+        </tr>
+    </table>
+    <br><br>
+    <a class="btn btn-outline-secondary me-1" href="/minecraft" role="button">元のページに戻る</a>
+{% endblock %}

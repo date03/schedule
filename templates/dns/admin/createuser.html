@@ -1,0 +1,51 @@
+{% extends "common/common.html" %}
+
+{% block title %}新規ユーザ登録{% endblock %}
+
+{% block card_header_1 %}新規ユーザ登録{% endblock %}
+{% block card_body_1 %}
+    <form id="createuserform" method="post">
+        {{ form.csrf_token }}
+        <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td nowrap>従業員番号　</td>
+                <td>{{form.user_number}}</td>
+            </tr>
+            <tr>
+                <td nowrap>パスワード　</td>
+                <td>{{form.password}}</td>
+            </tr>
+            <tr>
+                <td>苗字　</td>
+                <td>{{form.user_lname}}</td>
+            </tr>
+            <tr>
+                <td>名前(役職)　</td>
+                <td>{{form.user_fname}}</td>
+            </tr>
+            <tr>
+                <td>店番</td>
+                <td>{{store_number}}</td>
+            </tr>
+            <tr>
+                <td>キッチン</td>
+                <td>{{form.cook}} <small class="text-danger">※役職を選択してください。</small></td>
+            </tr>
+            <tr>
+                <td>フロント</td>
+                <td>{{form.front}} <small class="text-danger">※両方でも大丈夫です。</small></td>
+            </tr>
+            <tr>
+                <td>管理者</td>
+                <td nowrap>{{form.dns_admin}} <small class="text-danger">※管理者画面が見れるようになります。</small></td>
+            </tr>
+        </table>
+        </div>
+        <br>
+        <p>※必ずこの画面を記録(印刷またはスクリーンショット)し利用者にお渡しください。<br>
+        <label for="checkbox">{{form.checkbox}}完了しています。</label></p><br>
+        <p><button type="submit">登録</button></p>
+    </form>
+    
+{% endblock %}

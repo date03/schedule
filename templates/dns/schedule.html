@@ -1,0 +1,51 @@
+{% extends "common/common.html" %}
+
+{% block title %}{{deadline[0]}}月分　スケジュール登録{% endblock %}
+
+{% block card_header_1 %}{{deadline[0]}}月分　スケジュール登録{% endblock %}
+{% block card_body_1 %}
+    <form id="monthscheduleform" method="post">
+        {{ form.csrf_token }}
+        <p><label for="week">曜日：</label>{{ form.week }}
+        <br><small class="text-danger">※すべての曜日を忘れずに登録してください。</small></p>
+        
+        <p>最大<br>
+        {{ form.m_s_h }}：{{form.m_s_m}}～{{ form.m_e_h }}：{{form.m_e_m}}<br>
+        <small class="text-danger">※勤務できる最大時刻を教えてください。</small></p>
+        
+        <p>希望<br>
+        {{ form.w_s_h }}：{{form.w_s_m}}～{{ form.w_e_h }}：{{form.w_e_m}}<br>
+        <small class="text-danger">※最大のうち勤務したい時刻を教えてください。</small></p>
+        <p><button type="submit">登録</button></p>
+    </form>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}登録済み最大スケジュール{% endblock %}
+{% block card_body_2 %}
+{% for week in [('0', '月'), ('1', '火'), ('2', '水'), ('3', '木'), ('4', '金'), ('5', '土'), ('6', '日')] %}
+    {% set schedule = userschedule.filter_by(week=week[0],w_m='m').one_or_none() %}
+    {{week[1]}}　
+    {% if schedule != None %}
+        {{schedule.s_hour}}：{{schedule.s_minute}} ～ 
+        {{schedule.e_hour}}：{{schedule.e_minute}}<br>
+    {% else %}
+        --：-- ～ --：--<br>
+    {% endif %}
+{% endfor %}
+{% endblock %}
+
+{% set card_3 = 1 %}
+{% block card_header_3 %}登録済み希望スケジュール{% endblock %}
+{% block card_body_3 %}
+{% for week in [('0', '月'), ('1', '火'), ('2', '水'), ('3', '木'), ('4', '金'), ('5', '土'), ('6', '日')] %}
+    {% set schedule = userschedule.filter_by(week=week[0],w_m='w').one_or_none() %}
+    {{week[1]}}　
+    {% if schedule != None %}
+        {{schedule.s_hour}}：{{schedule.s_minute}} ～ 
+        {{schedule.e_hour}}：{{schedule.e_minute}}<br>
+    {% else %}
+        --：-- ～ --：--<br>
+    {% endif %}
+{% endfor %}
+{% endblock %}

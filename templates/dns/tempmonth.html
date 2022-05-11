@@ -1,0 +1,85 @@
+{% extends "common/common.html" %}
+
+{% block title %}{{month_num.month}}月　スケジュール{% endblock %}
+
+{% block card_header_1 %}{{month_num.month}}月　スケジュール{% endblock %}
+{% block card_body_1 %}
+<div class="table-responsive">
+    <table class="table table-bordered text-center">
+        <tr>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+            <th>日</th>
+        </tr>
+        <tr>
+            {% for mon in month %}
+            {% set store = storeschedule.filter_by(day=mon).all() %}
+            {% set std = stdschedule.filter_by(week=mon.weekday()).one_or_none() %}
+            <td>{{mon.strftime("%m/%d")}}
+                {% if store %}
+                    {% for sch in store %}
+                        <br>{{sch.s_hour}}:{{sch.s_minute}}~{{sch.e_hour}}:{{sch.e_minute}}
+                    {% endfor %}
+                {% elif std != None %}
+                    <br>{{std.s_hour}}:{{std.s_minute}}~{{std.e_hour}}:{{std.e_minute}}
+                {% endif %}
+            </td>
+            {% if mon.weekday() == 6 %}
+                </tr><tr>
+            {% endif %}
+            {% endfor %}
+        </tr>
+    </table>
+    <p>※画面が見切れる場合は横にスクロールできます。</p>
+</div>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}日別スケジュール申告{% endblock %}
+{% block card_body_2 %}
+<form id="dayscheduleform" method="post">
+    {{ form.csrf_token }}
+    変更する日付：{{form.day}}<br>
+    登録する時間：{{form.s_h}}:{{form.s_m}}~{{form.e_h}}:{{form.e_m}}
+    <p><button type="submit">登録</button></p>
+</form>
+{% endblock %}
+
+{% set card_3 = 1 %}
+{% block card_header_3 %}申告履歴{% endblock %}
+{% block card_body_3 %}
+<div class="table-responsive">
+    <p>※管理者が確認済みのものは削除できません。</p>
+    <table class="table table-bordered text-center">
+        <tr>
+            <th nowrap>変更する日付</th>
+            <th nowrap>登録した時間</th>
+            <th nowrap>管理者の確認</th>
+            <th nowrap>申告の取り消し<br>管理者の確認時刻</th>
+        </tr>
+        {% for sch in dayschedule %}
+        <tr>
+            <td>{{sch.day}}</td>
+            <td>{{sch.s_hour}}:{{sch.s_minute}}~{{sch.e_hour}}:{{sch.e_minute}}</td>
+            {% if sch.conf %}
+                <td>済</td>
+                <td>{{sch.confdate.strftime("%m/%d %H:%M")}}</td>
+            {% else %}
+                <td>未</td>
+                <td nowrap>
+                    <form id="deletedayscheduleform" method="post">
+                    {{ delform.csrf_token }}
+                    <input type="hidden" name="delid" value={{sch.id}}>
+                    {{ delform.sub }}
+                    </form>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

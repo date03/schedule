@@ -1,0 +1,21 @@
+{% extends "common/common.html" %}
+
+{% block title %}お知らせ　詳細{% endblock %}
+
+{% block card_header_1 %}{{news.news_title}}{% endblock %}
+
+{% block card_body_1 %}
+    作成者：{{create_user}}<br>
+    登録日時：{{ news.update.strftime("%y/%m/%d %H:%M") }}<br>
+    カテゴリ：{{ news.news_category }}
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}詳細{% endblock %}
+{% block card_body_2 %}
+    <p style="white-space:pre-wrap;">{{news.news_body}}</p>
+    <br><br>
+    <form action="/">
+        <button>トップページに戻る</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "common/common.html" %}
+
+{% block title %}日別スケジュール　登録{% endblock %}
+
+{% block card_header_1 %}申告された変更{% endblock %}
+{% block card_body_1 %}
+<div class="table-responsive">
+<p>確認ボタンを押すと自動的に下の登録用フォームに入力されます。</p>
+    <table class="table table-bordered text-center">
+        <tr>
+            <th nowrap>変更日</th>
+            <th nowrap>従業員番号</th>
+            <th nowrap>希望時間</th>
+            <th nowrap>確認</th>
+        </tr>
+        {% for sch in dayschedule %}
+        <tr>
+            {% set name = username.filter_by(user_number=sch.user_number).one_or_none()%}
+            <td nowrap>{{sch.day.strftime("%m/%d")}}</td>
+            <td nowrap>{{sch.user_number}} {{name.user_lname}}{{name.user_fname}}</td>
+            <td nowrap>{{sch.s_hour}}:{{sch.s_minute}}~{{sch.e_hour}}:{{sch.e_minute}}</td>
+            <td nowrap>
+            {% if sch.conf %}
+                {{sch.confdate.strftime("%m/%d %H:%M")}}
+            {% else %}
+                <form id="confdayscheduleform" method="post">
+                    {{ confform.csrf_token }}
+                    <input type="hidden" name="confid" value={{sch.id}}>
+                    {{ confform.sub }}
+                </form>
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}日別スケジュール登録フォーム{% endblock %}
+{% block card_body_2 %}
+<form id="storedayscheduleform" method="post">
+    {{ form.csrf_token }}
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <tr>
+                <th nowrap>変更日</th>
+                <th nowrap>従業員番号</th>
+                <th nowrap>確定時間</th>
+                <th nowrap></th>
+            </tr>
+            <tr>
+                <td nowrap>{{form.day}}</td>
+                <td nowrap>{{form.user_number}}</td>
+                <td nowrap>{{form.s_h}}:{{form.s_m}}~{{form.e_h}}:{{form.e_m}}</td>
+                <td nowrap><button type="submit">登録</button></td>
+            </tr>
+        </table>
+        <p>
+        ※一回目の登録の場合、基本スケジュールは上書きされますが、二回目以降は上書きされません。<br>
+        よって二回目以降は下記一覧から一回目の内容を削除してから登録してください。<br>
+        一日に複数回勤務がある場合は、元を削除せず登録してください。
+        </p>
+    </div>
+</form>
+{% endblock %}
+
+{% set card_3 = 1 %}
+{% block card_header_3 %}登録履歴{% endblock %}
+{% block card_body_3 %}
+<div class="table-responsive">
+    <table class="table table-bordered text-center">
+        <tr>
+            <th nowrap>変更日</th>
+            <th nowrap>従業員番号</th>
+            <th nowrap>希望時間</th>
+            <th nowrap>取り消し</th>
+        </tr>
+        {% for sch in storeschedule %}
+        <tr>
+            {% set name = username.filter_by(user_number=sch.user_number).one_or_none()%}
+            <td nowrap>{{sch.day.strftime("%m/%d")}}</td>
+            <td nowrap>{{sch.user_number}} {{name.user_lname}}{{name.user_fname}}</td>
+            <td nowrap>{{sch.s_hour}}:{{sch.s_minute}}~{{sch.e_hour}}:{{sch.e_minute}}</td>
+            <td nowrap>
+                <form id="deletedayscheduleform" method="post">
+                    {{ delform.csrf_token }}
+                    <input type="hidden" name="delid" value={{sch.id}}>
+                    {{ delform.sub }}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

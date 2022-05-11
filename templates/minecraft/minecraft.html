@@ -1,0 +1,33 @@
+{% extends "common/common.html" %}
+
+{% block title %}Minecraftサーバ{% endblock %}
+
+{% block meta %}<meta http-equiv="Refresh" content="60">{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="static/css/scroll.css" />
+{% endblock %}
+
+{% block card_header_1 %}Minecraftサーバ{% endblock %}
+
+{% block card_body_1 %}
+    <p>
+    このサイトの管理人が運営しているMinecraftのサーバの情報共有ページです。<br>
+    参加したい場合は、<a href="mailto:ddn.developer@gmail.com">ddn.developer@gmail.com</a>にご連絡ください。<br>
+    </p>
+    <a class="btn btn-outline-secondary me-1" href="/minecraft/mod" role="button">MOD情報はこちら</a>
+    <br><br>
+    <a class="btn btn-outline-secondary me-1" href="/" role="button">サイト一覧に戻る</a>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}サーバの稼働状況 <small>(60秒ごと自動更新)</small>{% endblock %}
+{% block card_body_2 %}
+<div id="scroll">
+    {% for log in minecraft_log %}
+    {{log}}<br>
+    {% endfor %}
+</div>
+<br><br>
+<a class="btn btn-outline-secondary me-1" href="/" role="button">サイト一覧に戻る</a>
+{% endblock %}

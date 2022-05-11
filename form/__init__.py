@@ -1,0 +1,9 @@
+from form.loginform import LoginForm
+from form.monthscheduleform import MonthScheduleForm
+from form.getmonthscheduleform import GetMonthScheduleForm
+from form.createuserform import CreateUserForm
+from form.setmonthscheduleform import SetMonthScheduleForm
+from form.createnewsform import CreateNewsForm
+from form.dayscheduleform import DayScheduleForm, DeleteDayScheduleForm
+from form.setdayscheduleform import SetDayScheduleForm, ConfDayScheduleForm
+from form.weekdayform import WeekDayForm, DeleteMonthScheduleForm

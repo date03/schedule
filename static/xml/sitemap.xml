@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9/">
+
+<url>
+  <loc>https://date.ddns.net/</loc>
+  <priority>1.0</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://date.ddns.net/minecraft</loc>
+  <priority>0.8</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://date.ddns.net/dns</loc>
+  <priority>0.8</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://date.ddns.net/login</loc>
+  <priority>0.8</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://date.ddns.net/minecraft/mod</loc>
+  <priority>0.7</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://date.ddns.net/redirect?status=mustloginnext=/dns</loc>
+  <priority>0.7</priority>
+  <changefreq>daily</changefreq>
+</url>
+
+</urlset>

@@ -1,0 +1,23 @@
+{% extends "common/common.html" %}
+
+{% block title %}新規 お知らせ{% endblock %}
+
+{% block card_header_1 %}新規 お知らせ{% endblock %}
+{% block card_body_1 %}
+<form id="getmonthscheduleform" method="post">
+    {{ form.csrf_token }}
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td nowrap>ニュースタイトル<br>
+                {{form.news_title}}</td>
+            </tr>
+            <tr>
+                <td nowrap>本文<br>
+                {{form.news_body(cols="30", rows="10")}}</td>
+            </tr>
+        </table>
+    </div>
+    <p><button type="submit">登録</button></p>
+</form>
+{% endblock %}

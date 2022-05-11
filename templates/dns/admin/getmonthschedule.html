@@ -1,0 +1,145 @@
+{% if current_user.dns_admin %}
+{% extends "common/common.html" %}
+
+{% block title %}スケジュールの取得{% endblock %}
+
+{% block card_header_1 %}スケジュールの取得{% endblock %}
+{% block card_body_1 %}
+<form id="getmonthscheduleform" method="post">
+    {{ form.csrf_token }}
+    <p>月：{{form.month}}　曜日：{{form.week}}　役職：{{form.position}}　時刻：{{form.time}}　<button type="submit">検索</button></p>
+</form>
+{% endblock %}
+
+{% set card_2 = 1 %}
+{% block card_header_2 %}希望スケジュール{% endblock %}
+{% block card_body_2 %}
+<p>凡例：<font class="text-info">キッチン</font>　<font class="text-danger">フロント</font>　<font class="text-warning">マルチ</font></p>
+<div class="table-responsive">
+<table class="table table-bordered">
+<tr>
+    <th nowrap>従業員番号<br>氏名</th>
+    <th nowrap>開始<br>終了</th>
+    {% for i in ['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'] %}
+    <th><small>{{i}}</small></th>
+    <th>　</th>
+    {% endfor %}
+</tr>
+{% for i in monthschedule.filter_by(w_m='w').all() %}
+<tr>
+    {% set position = userposition.filter_by(user_number=i.user_number).one_or_none() %}
+    {% if position.cook and position.front %}
+        {% set color = "bg-warning" %}
+    {% elif position.cook %}
+        {% set color = "bg-info" %}
+    {% elif position.front %}
+        {% set color = "bg-danger" %}
+    {% endif %}
+    {% set name = username.filter_by(user_number=i.user_number).one_or_none()%}
+    <th nowrap>{{i.user_number}}<br>{{name.user_lname}}{{name.user_fname}}</th>
+    <th nowrap>{{i.s_hour}}:{{i.s_minute}}<br>{{i.e_hour}}:{{i.e_minute}}</th>
+    {% set ns = namespace(flag = 0) %}
+    {% for j in ['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'] %}
+        {% if ns.flag %}
+            {% if j == i.e_hour %}
+                {% if '30' == i.e_minute %}
+                    <td class={{color}}></td>
+                    <td></td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
+                {% set ns.flag = 0 %}
+            {% else %}
+                <td class={{color}}></td>
+                <td class={{color}}></td>
+            {% endif %}
+        {% else %}
+            {% if j == i.s_hour %}
+                {% set ns.flag = 1 %}
+                {% if '30' == i.s_minute %}
+                    <td></td>
+                    <td class={{color}}></td>
+                {% else %}
+                    <td class={{color}}></td>
+                    <td class={{color}}></td>
+                {% endif %}
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
+        {% endif %}
+        {{flag}}
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
+
+{% set card_3 = 1 %}
+{% block card_header_3 %}最大スケジュール{% endblock %}
+{% block card_body_3 %}
+<p>凡例：<font class="text-info">キッチン</font>　<font class="text-danger">フロント</font>　<font class="text-warning">マルチ</font></p>
+<div class="table-responsive">
+<table class="table table-bordered">
+<tr>
+    <th nowrap>従業員番号<br>氏名</th>
+    <th nowrap>開始<br>終了</th>
+    {% for i in ['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'] %}
+        <th><small>{{i}}</small></th>
+        <th>　</th>
+    {% endfor %}
+</tr>
+{% for i in monthschedule.filter_by(w_m='m').all() %}
+<tr>
+    {% set position = userposition.filter_by(user_number=i.user_number).one_or_none() %}
+    {% if position.cook and position.front %}
+        {% set color = "bg-warning" %}
+    {% elif position.cook %}
+        {% set color = "bg-info" %}
+    {% elif position.front %}
+        {% set color = "bg-danger" %}
+    {% endif %}
+    {% set name = username.filter_by(user_number=i.user_number).one_or_none()%}
+    <th nowrap>{{i.user_number}}<br>{{name.user_lname}}{{name.user_fname}}</th>
+    <th nowrap>{{i.s_hour}}:{{i.s_minute}}<br>{{i.e_hour}}:{{i.e_minute}}</th>
+    {% set ns = namespace(flag = 0) %}
+    {% for j in ['06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'] %}
+        {% if ns.flag %}
+            {% if j == i.e_hour %}
+                {% if '30' == i.e_minute %}
+                    <td class={{color}}></td>
+                    <td></td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
+                {% set ns.flag = 0 %}
+            {% else %}
+                <td class={{color}}></td>
+                <td class={{color}}></td>
+            {% endif %}
+        {% else %}
+            {% if j == i.s_hour %}
+                {% set ns.flag = 1 %}
+                {% if '30' == i.s_minute %}
+                    <td></td>
+                    <td class={{color}}></td>
+                {% else %}
+                    <td class={{color}}></td>
+                    <td class={{color}}></td>
+                {% endif %}
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
+        {% endif %}
+        {{flag}}
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
+{% endif %}

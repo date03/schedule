@@ -1,0 +1,37 @@
+{% extends "common/common.html" %}
+
+{% block title %}管理者ページ{% endblock %}
+
+{% block card_header_1 %}管理者機能の選択{% endblock %}
+{% block card_body_1 %}
+    <form action="/dns/admin/dayschedule">
+            <button>日別スケジュール</button>
+    </form><br>
+    {% if deadline_admin[1].days < 7 %}
+        <form action="/dns/admin/monthschedule">
+                <button><font color="red">月間スケジュール・登録</font></button>
+        </form>
+        ※{{deadline_admin[0]}}月分の締め切りまで<font color="red">残り{{deadline_admin[1].days}}日</font><br><br>
+    {% else %}
+        <form>
+                <button>月間スケジュール・登録</button>
+        </form>
+        <small class="text-danger">※{{deadline_admin[0]}}月分の受け付けは{{deadline_admin[1].days-6}}日後から1週間です。</small><br><br>
+        
+    {% endif %}
+    <form action="/dns/admin/getmonthschedule">
+            <button>月間スケジュール・取得</button>
+    </form><br>
+    <form action="/dns/admin/createnews">
+            <button>新規お知らせの登録</button>
+    </form><br>
+    <form action="/dns/admin/createuser">
+            <button>新規ユーザ登録</button>
+    </form><br>
+    <form action="/dns/admin/employees">
+            <button>ユーザー管理</button>
+    </form><br>
+    <form action="/dns">
+            <button>戻る</button>
+    </form>
+{% endblock %}
